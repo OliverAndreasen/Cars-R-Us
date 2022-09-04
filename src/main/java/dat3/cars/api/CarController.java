@@ -27,31 +27,29 @@ public class CarController {
         return carService.getCars();
     }
 
+    //Security ADMIN
     @GetMapping(path = "/{id}")
     public CarResponse getCarById(@PathVariable int id) throws Exception { //Obviously we need to be able to limit this in a system with thousands of members
         CarResponse response = carService.findCarById(id);
         return response;
     }
 
+    //Security ADMIN
     @DeleteMapping("{id}")
         public void deleteCarById(@PathVariable int id){
         carService.deleteById(id);
     }
 
+    //Security ADMIN
     @PatchMapping("Model/{id}/{value}")
     public void setModelForCar(@PathVariable int id, @PathVariable String value){
 
     }
 
+    //Security ADMIN
     @PutMapping("/{id}")
     public ResponseEntity<Boolean> editCar(@RequestBody CarRequest body, @PathVariable int id){
         carService.editCar(body,id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
-
-
-
-
-
-
 }
