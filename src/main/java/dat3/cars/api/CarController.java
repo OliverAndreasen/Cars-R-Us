@@ -2,6 +2,7 @@ package dat3.cars.api;
 
 import dat3.cars.dto.CarRequest;
 import dat3.cars.dto.CarResponse;
+import dat3.cars.dto.MemberRequest;
 import dat3.cars.dto.MemberResponse;
 import dat3.cars.entity.Car;
 import dat3.cars.repository.CarRepository;
@@ -35,7 +36,7 @@ public class CarController {
     }
 
     //Security ADMIN
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
         public void deleteCarById(@PathVariable int id){
         carService.deleteById(id);
     }
@@ -43,7 +44,7 @@ public class CarController {
     //Security ADMIN
     @PatchMapping("Model/{id}/{value}")
     public void setModelForCar(@PathVariable int id, @PathVariable String value){
-
+    carService.setModelForCar(id, value);
     }
 
     //Security ADMIN
@@ -51,5 +52,12 @@ public class CarController {
     public ResponseEntity<Boolean> editCar(@RequestBody CarRequest body, @PathVariable int id){
         carService.editCar(body,id);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+
+    //Security ADMIN
+    @PostMapping
+    public CarResponse addCar(@RequestBody CarRequest body) {
+        return carService.addCar(body);
     }
 }
