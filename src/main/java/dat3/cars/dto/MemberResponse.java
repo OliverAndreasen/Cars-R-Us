@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -28,6 +30,8 @@ public class MemberResponse {
   LocalDateTime edited;
   Integer ranking;
 
+  List<ReservationResponse> reservations;
+
   //Convert Member Entity to Member DTO
   public MemberResponse(Member m, boolean includeAll) {
     this.username = m.getUsername();
@@ -37,6 +41,9 @@ public class MemberResponse {
     this.lastName = m.getLastName();
     this.city = m.getCity();
     this.zip = m.getZip();
+    if (!m.getReservations().isEmpty()) {
+      this.reservations = m.getReservations().stream().map(reservation -> new ReservationResponse(reservation)).collect(Collectors.toList());
+    }
     if(includeAll){
       this.created = m.getCreated();
       this.edited = m.getEdited();

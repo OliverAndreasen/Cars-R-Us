@@ -1,11 +1,13 @@
 package dat3.cars.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dat3.security.entity.UserWithRoles;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,11 +33,33 @@ public class Member extends UserWithRoles {
   @Column(length = 50) //I Wish could be made NOT NULL
   private String city;
 
-  @Column(length = 50) //I Wish could be made NOT NULL
+  @Column(length = 50) //I Wi
+
+  // sh could be made NOT NULL
   private String zip;
 
   private boolean approved;
   private int ranking;
+
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  Reservation reservation;
+
+
+  public Reservation getReservation() {
+    return reservation;
+  }
+
+
+  //mappedBy er Reference over i Reservation
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Reservation> reservations = new ArrayList<>();
+
+  // Bruges til at gemme reservation
+  public void addReservation(Reservation reservation){
+    reservations.add(reservation);
+  }
+
 
   public Member(String user, String password, String email, String firstName, String lastName, String street, String city, String zip) {
     super(user, password, email);
@@ -45,4 +69,7 @@ public class Member extends UserWithRoles {
     this.city = city;
     this.zip = zip;
   }
+
+
+
 }

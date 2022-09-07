@@ -2,6 +2,7 @@ package dat3.cars.configuration;
 
 import dat3.cars.entity.Car;
 import dat3.cars.entity.Member;
+import dat3.cars.entity.Reservation;
 import dat3.cars.repository.CarRepository;
 import dat3.cars.repository.MemberRepository;
 import dat3.security.entity.Role;
@@ -10,6 +11,8 @@ import dat3.security.repository.UserWithRolesRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
+
+import java.time.LocalDate;
 
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
@@ -41,6 +44,7 @@ public class SetupDevUsers implements ApplicationRunner {
     memberRepository.save(m3);
 
 
+
     Car car1 = Car.builder()
             .brand("Volvo")
             .model("V70")
@@ -55,8 +59,28 @@ public class SetupDevUsers implements ApplicationRunner {
             .bestDiscount(20.0)
             .build();
 
+    LocalDate date = LocalDate.now();
+
+    /*
+    Reservation reservation1 = Reservation.builder()
+            .car(car1)
+            .member(m1)
+            .rentalDate(date)
+            .build();
+
+     */
+
     carRepository.save(car1);
     carRepository.save(car2);
+
+    Reservation reservation = new Reservation(m1,car1,LocalDate.of(2022, 10, 10));
+
+    m1.addReservation(reservation);
+    memberRepository.save(m1);
+
+
+
+
 
     setupUserWithRoleUsers();
   }
