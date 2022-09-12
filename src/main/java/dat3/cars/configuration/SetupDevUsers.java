@@ -73,10 +73,18 @@ public class SetupDevUsers implements ApplicationRunner {
     carRepository.save(car1);
     carRepository.save(car2);
 
-    Reservation reservation = new Reservation(m1,car1,LocalDate.of(2022, 10, 10));
+    Reservation reservation1 = new Reservation(m1,car2,LocalDate.of(2023, 11, 11));
+    Reservation reservation2 = new Reservation(m1,car1,LocalDate.of(2022, 10, 10));
 
-    m1.addReservation(reservation);
+
+
+    m1.addReservation(reservation1);
+    m1.addReservation(reservation2);
+    //System.out.println("Størrelese på reservations: " + m1.getReservations().size());
+
     memberRepository.save(m1);
+
+
 
 
 
