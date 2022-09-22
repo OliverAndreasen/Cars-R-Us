@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationRequest {
-    String username;
-    int carId;
-    String date;
+
+  String username;
+  int carId;
+  String date;
 }
